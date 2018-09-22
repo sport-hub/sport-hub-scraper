@@ -24,10 +24,20 @@
 #
 # # with open('data.json', 'w') as outfile:
 # #    json.dump(dumps(clubs, primitives=True), outfile)
-from models.player import Player, Gender
-from services.player_processor import PlayerProcessor
 
-playerProcessor = PlayerProcessor()
-glenn = Player("F5547D29-4A68-4135-8A81-35E381FC4E95", "Glenn, Latomme", Gender.MALE, 50104197)
 
-playerProcessor.get_player_ranking(glenn)
+# Process user
+
+# from models.player import Player, Gender
+# from services.player_processor import PlayerProcessor
+
+# playerProcessor = PlayerProcessor()
+# glenn = Player("F5547D29-4A68-4135-8A81-35E381FC4E95", "Glenn, Latomme", Gender.MALE, 50104197)
+
+# playerProcessor.get_player_ranking(glenn)
+
+
+from services.firestore import FirestoreService
+
+firestoreService = FirestoreService()
+firestoreService.getInfoFromSore()
