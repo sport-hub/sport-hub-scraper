@@ -11,8 +11,8 @@ class FirestoreService:
         self.db = firestore.client()
   
 
-    def getInfoFromSore(self):
-        users_ref = self.db.collection(u'users').where(u'email', u'==', u'glenn.latomme@gmail.com')
+    def getInfoFromSore(self, name):
+        users_ref = self.db.collection(u'users').where(u'displayName', u'==', name)
         docs = users_ref.get()
 
         for doc in docs:

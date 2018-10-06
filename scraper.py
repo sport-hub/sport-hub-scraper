@@ -28,16 +28,16 @@
 
 # Process user
 
-# from models.player import Player, Gender
-# from services.player_processor import PlayerProcessor
+from models.player import Player, Gender
+from services.player_processor import PlayerProcessor
+from services.firestore import FirestoreService
 
-# playerProcessor = PlayerProcessor()
-# glenn = Player("F5547D29-4A68-4135-8A81-35E381FC4E95", "Glenn, Latomme", Gender.MALE, 50104197)
+playerProcessor = PlayerProcessor()
+firestoreService = FirestoreService()
+
+glenn = Player("F5547D29-4A68-4135-8A81-35E381FC4E95", "Glenn, Latomme", Gender.MALE, 50104197)
 
 # playerProcessor.get_player_ranking(glenn)
 
-
-from services.firestore import FirestoreService
-
-firestoreService = FirestoreService()
-firestoreService.getInfoFromSore()
+results = firestoreService.getInfoFromSore(glenn.get_full_name().replace(',', ''))
+print(results.length)

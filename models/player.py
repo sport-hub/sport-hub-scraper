@@ -4,7 +4,8 @@ from models.ranking import PlayerRanking
 
 
 class Player:
-    # Initializer / Instance Attributes
+        # Initializer / Instance Attributes
+
     def __init__(self, player_id, name, gender, number):
         names = name.split(',')
         self.player_id = player_id
