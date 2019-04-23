@@ -16,6 +16,9 @@ class Browser:
 
     def get_club(self, tournament, club_id):
         return self.get_content('sport/club.aspx?id={}&club={}'.format(tournament, club_id))
+    
+    def get_player(self, tournament, player_id):
+        return self.get_content('sport/player.aspx?id={}&player={}'.format(tournament, player_id))
 
     def get_player_ranking(self, player_id):
         return self.get_content('player-profile/{}/ranking'.format(player_id))
@@ -27,19 +30,22 @@ class Browser:
         url = 'league?StartDate={0}-01-01&EndDate={0}-01-01&StatusFilterID=false&CountryCode=BEL&Q={1}'.format(year, q)
         return self.get_content_search(url)
 
-    def get_players(self, tournament, club_id):
-        return self.get_content('sport/clubplayers.aspx?id={}&cid={}'.format(tournament, club_id))
+    def get_players(self, competition):
+        return self.get_content('sport/clubplayers.aspx?id={}&cid={}'.format(competition.comp_id, competition.club_id))
 
-    def get_matches(self, tournament, club_id):
-        return self.get_content('sport/clubplayers.aspx?id={}&cid={}'.format(tournament, club_id))
+    def get_matches(self, competition):
+        return self.get_content('sport/clubplayers.aspx?id={}&cid={}'.format(competition.comp_id, competition.club_id))
 
     def get_content(self, url):
         parsed_url = self.get_url(url)
         # self.browser.implicitly_wait(3)
+        self.browser.implicitly_wait(20)
         self.browser.get(parsed_url)
+        self.browser.set_window_size(1920, 1080)
+        self.browser.save_screenshot('get_content.png')
 
         soup = BeautifulSoup(self.browser.page_source, "html5lib")
-        main_content = soup.find('div', attrs={'id': 'content'})
+        main_content = soup.find('div', attrs={'class': 'content'})
 
         # New layout is using class
         if main_content is None:
@@ -49,9 +55,10 @@ class Browser:
 
     def get_content_search(self, url):
         parsed_url = self.get_url('/find/{}'.format(url))
-        self.browser.implicitly_wait(10)
+        self.browser.implicitly_wait(20)
         self.browser.get(parsed_url)
-        self.browser.save_screenshot('testing.png')
+        self.browser.set_window_size(1920, 1080)
+        self.browser.save_screenshot('get_content_search.png')
         soup = BeautifulSoup(self.browser.page_source, "html5lib")
         main_content = soup.find('div', attrs={'class': 'wrapper wrapper--padding'})
         return main_content

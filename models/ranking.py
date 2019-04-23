@@ -4,7 +4,7 @@ from models.points import RankingPoint
 
 
 class PlayerRanking:
-    def __init__(self):
+    def __init__(self, single=None, double=None, mix=None):
         self.single = Ranking(RankingType.SINGLE)
         self.double = Ranking(RankingType.DOUBLE)
         self.mix = Ranking(RankingType.MIX)
@@ -24,6 +24,9 @@ class Ranking:
     def __init__(self, ranking_type):
         self.ranking_type = ranking_type
         self.points = []
+
+    def totalPoints(self):
+        return int(self.points[0].competition_points + self.points[0].tournament_points)
 
 
 class RankingType(IntEnum):
